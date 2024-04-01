@@ -3,6 +3,7 @@
 use App\Http\Controllers\PictureController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -24,8 +25,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('pictures', PictureController::class);
 
-Route::get('/profiles', [ProfileController::class, 'index'] );
-Route::post('/profiles', [ProfileController::class, 'store'] );
-Route::get('/profiles/{profile}', [ProfileController::class, 'show'] );
+Route::apiResource('profiles', ProfileController::class);
 
 Route::apiResource('posts', PostController::class);
+
+Route::apiResource('users', UserController::class);
