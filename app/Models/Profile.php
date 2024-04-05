@@ -11,4 +11,7 @@ class Profile extends Model
     use HasFactory;
     use SoftDeletes;
 
+    public function userProfile(){
+        return $this->belongsTo(User::class);
+    }
 }
