@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Console\Command;
 
@@ -26,7 +27,8 @@ class GoCommand extends Command
      */
     public function handle()
     {
-        $user = User::all();
-        return dd($user);
+        $user = User::find(3);
+        $post = Post::first();
+        return dd($post->postusers->toArray());
     }
 }

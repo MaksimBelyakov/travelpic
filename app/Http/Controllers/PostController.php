@@ -12,14 +12,15 @@ use Illuminate\Http\Response;
 class PostController extends Controller
 {
     public function index(){
-        return PostReSource::collection(Post::all())->resolve();
+        $posts = PostReSource::collection(Post::all())->resolve();
+        return inertia('User/Index', compact('posts'));
     }
 
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
         $post = Post::create($data);
-        return $post;
+        return PostReSource::make($post);
     }
 
     public function show(Post $post)
@@ -39,5 +40,10 @@ class PostController extends Controller
     {
         $post->delete();
         return \response(Response::HTTP_NO_CONTENT);
+    }
+
+    public function create()
+    {
+        return inertia('User/CreatePost');
     }
 }

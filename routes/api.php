@@ -27,6 +27,6 @@ Route::apiResource('pictures', PictureController::class);
 
 Route::apiResource('profiles', ProfileController::class);
 
-Route::apiResource('posts', PostController::class);
+//Route::apiResource('posts', PostController::class);
 
 Route::apiResource('users', UserController::class);
