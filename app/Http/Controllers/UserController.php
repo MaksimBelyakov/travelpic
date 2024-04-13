@@ -7,6 +7,7 @@ use App\Http\Requests\User\StoreRequest;
 use App\Http\Requests\User\UpdateRequest;
 use App\Http\Resources\User\UserResource;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -20,8 +21,8 @@ class UserController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
-        $user = User::create($data);
-        return $user;
+        $user = UserService::store($data);
+        return UserResource::make($user)->resolve();
     }
 
     public function show(User $user)

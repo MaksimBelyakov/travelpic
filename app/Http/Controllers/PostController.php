@@ -13,7 +13,7 @@ class PostController extends Controller
 {
     public function index(){
         $posts = PostReSource::collection(Post::all())->resolve();
-        return inertia('User/Index', compact('posts'));
+        return inertia('Post/Index', compact('posts'));
     }
 
     public function store(StoreRequest $request)
