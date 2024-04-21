@@ -22,8 +22,17 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string',
-            'description' => 'required|string'
+            'post.title' => 'required|string',
+            'post.description' => 'required|string',
+            'images' => 'nullable|array',
+            'images.*' => 'nullable|file'
         ];
+    }
+
+    protected function passedValidation()
+    {
+        return $this->merge([
+            'images' => $this->images ?? []
+        ]);
     }
 }

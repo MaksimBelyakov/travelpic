@@ -8,6 +8,7 @@ use App\Http\Resources\Post\PostReSource;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -19,13 +20,21 @@ class PostController extends Controller
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
-        $post = Post::create($data);
+        $post = Post::create($data['post']);
+
+        foreach ($data['images'] as $image) {
+          $path = Storage::disk('public')->put('/images',$image);
+          $post->images()->create(['path' => $path]);
+
+        }
+
         return PostReSource::make($post);
     }
 
     public function show(Post $post)
     {
-        return $post;
+        $post = PostReSource::make($post)->resolve();
+        return inertia('Post/Show', compact('post'));
     }
 
     public function update(UpdateRequest $request, Post $post)
@@ -44,6 +53,6 @@ class PostController extends Controller
 
     public function create()
     {
-        return inertia('User/CreatePost');
+        return inertia('Post/CreatePost');
     }
 }

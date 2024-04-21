@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Image;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Console\Command;
@@ -28,8 +29,7 @@ class GoCommand extends Command
      */
     public function handle()
     {
-        $user = Auth::user();
-        $post = Post::first();
-        return dd($user);
+
+        dd(Image::first()->url);
     }
 }

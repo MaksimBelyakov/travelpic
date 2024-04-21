@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\PictureController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -34,10 +38,29 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('posts', PostController::class);
+    Route::resource('comments', CommentController::class);
+
+    Route::resource('pictures', PictureController::class);
+
+    Route::resource('profiles', ProfileController::class);
+
+//Route::apiResource('posts', PostController::class);
+
+    Route::resource('users', UserController::class);
+});
+
+
+Route::group([ 'middleware' => 'web'], function () {
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::post('me', [AuthController::class, 'me']);
+
 });
 
 Route::group(['middleware' => 'auth'], function(){
-    Route::resource('posts', PostController::class);
+
 
 });
 
